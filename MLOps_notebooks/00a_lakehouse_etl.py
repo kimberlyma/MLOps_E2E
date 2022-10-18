@@ -75,6 +75,7 @@ schema = StructType([
   ])
 
 # Read CSV, write to Delta and take a look
+# change
 bronze_df = spark.read.format('csv').schema(schema).option('header','true')\
                .load(driver_to_dbfs_path)
 
