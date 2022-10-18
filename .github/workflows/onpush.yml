@@ -74,7 +74,7 @@ jobs:
 
       - name: Check if staging Repo already exists
         id: check-repo-stg
-        run: databricks repos get --path /Repos/MLOps_Staging/MLOps_E2E
+        run: databricks repos get --path /Repos/MLOps_Staging/MLOps_E2E --profile=demo-cloud
         continue-on-error: true # the above command will error out if repo does not exist, continue if that's the case
 
       - name: Create staging Repos
@@ -83,10 +83,10 @@ jobs:
           repo_url: 'https://github.com/${{ env.GITHUB_REPOSITORY_OWNER_PART}}/${{ env.GITHUB_REPOSITORY_NAME_PART}}.git'
         run: |
           echo 'env.repo_url is ${{env.repo_url}}'
-          databricks repos create --url=${{env.repo_url}} --provider=gitHub --path=/Repos/MLOps_Staging/MLOps_E2E 
+          databricks repos create --url=${{env.repo_url}} --provider=gitHub --path=/Repos/MLOps_Staging/MLOps_E2E --profile=demo-cloud
 
       - name: Update staging Repos
-        run: databricks repos update --path=/Repos/MLOps_Staging/MLOps_E2E --branch=${{ env.GITHUB_REF_SLUG }}
+        run: databricks repos update --path=/Repos/MLOps_Staging/MLOps_E2E --branch=${{ env.GITHUB_REF_SLUG }} --profile=demo-cloud
 
       # run test in staging env
       - uses: ./.github/databricks-actions/run-notebook
